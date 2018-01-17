@@ -1,11 +1,35 @@
 var chai = require('chai'),
     should = chai.should(),
     chaiHttp = require('chai-http'),
-    server = 'http://localhost:3000';
+    server = 'http://localhost:3000'
+    mongoose = require('mongoose'),
+    shorturlModel = require('../app/models/shortener-model'),
+    mongodb = require('../config/config.js');
 
 chai.use(chaiHttp);
 
 describe('PUT /create', () => {
+  
+  before(function(done) {
+
+    mongoose.Promise = global.Promise;
+    mongoose.connect(mongodb.db_host, { useMongoClient: true });  // Connect to MongoDB
+  
+    shorturlModel.remove({ url: 'http://www.test.com' }, function (err) {
+      if (err) return console.error(err);
+    });
+  
+    for (var i = 0; i < 10; i++) {
+      let shortURL = new shorturlModel({
+        alias: 'alias'+i, url: 'http://www.test.com', views: i
+      })
+      shortURL.save(function (err, shortURL) {
+        if (err) return console.error(err);
+      });
+    }
+    done();
+  });
+  
   it('Error when trying to create a shortener without URL', (done) => {
     chai.request(server)
     .put('/create')
@@ -58,12 +82,11 @@ describe('PUT /create', () => {
 describe('GET /:alias', () => {
   it('Get site by alias', (done) => {
     chai.request(server)
-    .get('/123abc')
+    .get('/alias0')
     .end((err, res) => {
       should.exist(res.body);
       should.exist(res.redirects);
       res.redirects.should.be.an('Array');
-      res.redirects.should.not.have.lengthOf(0);
       done();
     });
   });
@@ -85,6 +108,7 @@ describe('GET /top-urls', () => {
     .get('/top-urls')
     .end((err, res) => {
       should.exist(res.body);
+      res.body.should.not.have.lengthOf(0);
       res.body[0].should.have.property("_id");
       res.body[0].should.have.property("url");
       done();
