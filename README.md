@@ -14,7 +14,7 @@ Este projeto requer os seguintes programas instalados:
 - Clone o respositório: `git clone https://github.com/gustavofournier/hire.me.git`
 - Instale as dependências: `npm install`
 - Inicie o servidor: `npm start`
-- No arquivo "server.js", você pode alterar o endereço do banco MongoDB.
+- No arquivo "config/config.js", é possível alterar o endereço do banco MongoDB.
 
 ## Utilização
 
@@ -33,12 +33,21 @@ Acessando o encurtador:
 http GET http://localhost:3000/google
 ```
 
+## Testes
+
+Testando as funcionalidades da API:
+```
+npm test
+```
+
 ## Ferramentas utilizadas
 Ferramentas que foram utilizadas para criar e testar o projeto:
 
 - Express
 - Mongoose
 - Nodemon
+- Mocha
+- Chai
 - Base64url
 - Postman
 
