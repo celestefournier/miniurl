@@ -58,9 +58,12 @@ describe('PUT /create', () => {
 describe('GET /:alias', () => {
   it('Get site by alias', (done) => {
     chai.request(server)
-    .get('/test')
+    .get('/123abc')
     .end((err, res) => {
       should.exist(res.body);
+      should.exist(res.redirects);
+      res.redirects.should.be.an('Array');
+      res.redirects.should.not.have.lengthOf(0);
       done();
     });
   });
@@ -79,9 +82,11 @@ describe('GET /:alias', () => {
 describe('GET /top-urls', () => {
   it('Get top 10 URLs', (done) => {
     chai.request(server)
-    .get('/test')
+    .get('/top-urls')
     .end((err, res) => {
       should.exist(res.body);
+      res.body[0].should.have.property("_id");
+      res.body[0].should.have.property("url");
       done();
     });
   });
