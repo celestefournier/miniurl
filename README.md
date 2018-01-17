@@ -1,17 +1,14 @@
-# RESTful API - ShortenURL
+# MiniURL
 
-Esta é uma API RESTful para encurtar as URLs de acordo com os links salvos pelo usuário.
+O MiniURL é uma API RESTful para encurtar as URLs para ser acessadas atravéz de um alias.
 
 ## Requerimentos
 
-Este projeto requer os seguintes programas instalados:
-
-- Node.js
-- MongoDB (opcional, pondendo utilizar o MongoDB Atlas)
+Este projeto requer a instalação do `Node.js`.
 
 ## Instalação
 
-- Clone o respositório: `git clone https://github.com/gustavofournier/hire.me.git`
+- Clone o respositório: `git clone https://github.com/gustavofournier/miniurl`
 - Instale as dependências: `npm install`
 - Inicie o servidor: `npm start`
 - No arquivo "config/config.js", é possível alterar o endereço do banco MongoDB.
@@ -31,6 +28,11 @@ http PUT http://localhost:3000/create?url=http://www.google.com.br&alias=google
 Acessando o encurtador:
 ```
 http GET http://localhost:3000/google
+```
+
+Acessando as 10 urls mais visitadas:
+```
+http GET http://localhost:3000/top-urls
 ```
 
 ## Testes
